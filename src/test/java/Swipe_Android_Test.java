@@ -13,7 +13,6 @@ import java.net.URL;
 
 public class Swipe_Android_Test {
 
-
     public AndroidDriver driver;
     public AndroidTouchAction actions;
 
