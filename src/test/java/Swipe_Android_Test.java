@@ -2,7 +2,7 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.android.AndroidTouchAction;
 import io.appium.java_client.touch.offset.ElementOption;
-import org.openqa.selenium.By;
+import io.appium.java_client.touch.offset.PointOption;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
@@ -11,7 +11,8 @@ import org.testng.annotations.Test;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class Drag_Drop_Test {
+public class Swipe_Android_Test {
+
 
     public AndroidDriver driver;
     public AndroidTouchAction actions;
@@ -29,25 +30,31 @@ public class Drag_Drop_Test {
         driver = new AndroidDriver<>(new URL("http://localhost:4723/wd/hub"),caps);
     }
 
+
     @Test
-    public void drag_drop(){
+    public void swipe_test(){
         AndroidElement views =
                 (AndroidElement) driver.findElementByAccessibilityId("Views");
         // Tap Views
         actions = new AndroidTouchAction(driver);
         actions.tap(ElementOption.element(views)).perform();
 
+        AndroidElement gallery =
+                (AndroidElement) driver.findElementByAccessibilityId("Gallery");
+        // Tap Gallery
+        actions.tap(ElementOption.element(gallery)).perform();
 
-        AndroidElement dragAndDrop =
-                (AndroidElement) driver.findElementByAccessibilityId("Drag and Drop");
-        // Tap Lists
-        actions.tap(ElementOption.element(dragAndDrop)).perform();
+        AndroidElement photo =
+                (AndroidElement) driver.findElementByAccessibilityId("1. Photos");
+        // Tap Photos
+        actions.tap(ElementOption.element(photo)).perform();
 
-        AndroidElement drag = (AndroidElement) driver.findElement(By.id("drag_dot_1"));
-        AndroidElement drop = (AndroidElement) driver.findElement(By.id("drag_dot_2"));
-
-        actions.longPress(ElementOption.element(drag))
-                .waitAction().moveTo(ElementOption.element(drop))
+        AndroidElement picture1 =
+                (AndroidElement) driver.findElementsByClassName("android.widget.ImageView").get(0);
+        // Swipe picture1
+        actions.press(ElementOption.element(picture1))
+                .waitAction()
+                .moveTo(PointOption.point(-200, 0))
                 .release()
                 .perform();
     }
@@ -58,4 +65,5 @@ public class Drag_Drop_Test {
             driver.quit();;
         }
     }
+
 }
